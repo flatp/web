@@ -1,14 +1,15 @@
+
+// react-router-domのインポートを追加
+import { Routes, Route } from "react-router-dom";
+
+import { Home } from "./home.tsx";
+import { Profile } from "./profile.tsx";
+
 export const App = () => {
   return (
-    <div>
-      <form onSubmit={(e) => e.preventDefault()}>
-        <input type="text" value="" onChange={(e) => e.preventDefault()} />
-        <input
-          type="submit"
-          value="追加"
-          onSubmit={(e) => e.preventDefault()}
-        />
-      </form>
-    </div>
-  );
-};
+      <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+      </Routes>
+  )
+}
