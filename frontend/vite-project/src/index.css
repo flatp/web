@@ -8,16 +8,6 @@ select {
   padding: 0.5em;
 }
 
-input[type='text'] {
-  width: 50vw;
-  padding: 0.5em;
-  margin: 0 0.5em;
-}
-
-input[type='submit'] {
-  padding: 0.1em 0.5em;
-}
-
 ul {
   list-style: none;
   margin-left: 0.5em;
@@ -26,4 +16,227 @@ ul {
 
 li {
   margin-bottom: 0.5em;
+}
+
+.profile-container {
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  margin-top: 60px;
+  /* box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.1); */
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #ebebeb;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1)
+}
+
+.profile-form h2 {
+  text-align: center;
+}
+
+.profile-form div {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.input-text,
+.select-dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.submit-button {
+  padding: 10px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+.todo-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.todo-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-date {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.todo-date2 {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.todo-user {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.post_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+.todo-details h3 {
+  margin: 0;
+  color: #333;
+  padding: 15px;
+}
+
+.todo-details h4 {
+  margin: 0;
+  color: #666;
+  padding: 5px;
+}
+
+.rank-button {
+  margin-top: 10px;
+  padding: 8px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rank-button:hover {
+  background-color: #0056b3;
+}
+
+/* タブ全体 */
+.tab-container {
+  display: flex;
+  max-width: 600px;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+/* 各タブ */
+.tab-item {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+  border: 1px solid white;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+  flex-grow: 1;
+  transition: color 0.3s;
+}
+
+/* タブ選択時のスタイル */
+.tab-item.active {
+  color: #007bff;
+}
+
+/* 選択タブの下線 */
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: #007bff;
+}
+
+/* ホバー効果 */
+.tab-item:hover {
+  color: #007bff;
+}
+
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #333; /* 背景色 */
+  color: white; /* テキストの色 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0px; /* 左右の余白 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* 下方向の影 */
+  z-index: 1000; /* 他の要素より上に表示 */
+}
+
+.top-bar .logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.top-bar .menu {
+  display: flex;
+  gap: 20px; /* メニュー間の間隔 */
+  margin-right: 20px;
+}
+
+.top-bar .menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.top-bar .menu a:hover {
+  text-decoration: underline;
+}
+
+/* コンテンツのスタイル */
+.content {
+  margin-top: 60px; /* 上部バーの高さに合わせる */
+  padding: 20px;
 }
