@@ -27,6 +27,12 @@ export const Hub = () => {
           >
             タイムライン
           </button>
+          <button
+            className={`tab-item ${activeTab === 'timeline' ? 'active' : ''}`}
+            onClick={() => setActiveTab('timeline')}
+          >
+            ブックマーク
+          </button>
         </div>
         {activeTab === 'history' && <Profile />}
         {activeTab === 'timeline' && <Timeline />}
