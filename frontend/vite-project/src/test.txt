@@ -1,0 +1,120 @@
+import React, { useEffect, useState } from 'react';
+import { followUser, likePost, unlikePost, getUserPosts, getFollowingPosts } from './api';
+
+const PostComponent: React.FC = () => {
+  const [userPosts, setUserPosts] = useState([]);
+  const [followingPosts, setFollowingPosts] = useState([]);
+
+  const userId = 1; // 現在のユーザID (仮)
+  const targetUserId = 2; // フォローしたいユーザID
+  const postId = 3; // 操作する投稿ID
+
+  // ユーザの投稿取得
+  const fetchUserPosts = async () => {
+    try {
+      const response = await getUserPosts(userId, 5); // 5件の投稿を取得
+      setUserPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching user posts:', error);
+    }
+  };
+
+  // フォローしているユーザの投稿取得
+  const fetchFollowingPosts = async () => {
+    try {
+      const response = await getFollowingPosts(userId, 5); // 5件の投稿を取得
+      setFollowingPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching following posts:', error);
+    }
+  };
+
+  // ユーザをフォロー
+  const handleFollow = async () => {
+    try {
+      await followUser(userId, targetUserId);
+      alert('フォローしました');
+    } catch (error) {
+      console.error('Error following user:', error);
+    }
+  };
+
+  // 投稿にLike
+  const handleLike = async () => {
+    try {
+      await likePost(postId, userId);
+      alert('いいねしました');
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
+  };
+
+  // 投稿のLike解除
+  const handleUnlike = async () => {
+    try {
+      await unlikePost(postId, userId);
+      alert('いいねを解除しました');
+    } catch (error) {
+      console.error('Error unliking post:', error);
+    }
+  };
+
+   const handleCreatePost = async () => {
+    try {
+      const postData = {
+        user: 1, // 投稿者のID
+        name: 'New Post Title',
+        shop: 1, // 店舗ID
+        memo: 'This is a test post.',
+      };
+      const response = await createPost(postData);
+      console.log('Post created:', response.data);
+      setPostId(response.data.id);
+      alert('投稿が作成されました');
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    if (!postId) return alert('削除する投稿がありません。');
+
+    try {
+      await deletePost(postId);
+      console.log(`Post ${postId} deleted.`);
+      alert('投稿が削除されました');
+      setPostId(null);
+    } catch (error) {
+      console.error('Error deleting post:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserPosts();
+    fetchFollowingPosts();
+  }, []);
+
+  return (
+    <div>
+      <h2>ユーザの投稿</h2>
+      <ul>
+        {userPosts.map((post: any) => (
+          <li key={post.id}>{post.name}: {post.memo}</li>
+        ))}
+      </ul>
+
+      <h2>フォローしているユーザの投稿</h2>
+      <ul>
+        {followingPosts.map((post: any) => (
+          <li key={post.id}>{post.name}: {post.memo}</li>
+        ))}
+      </ul>
+
+      <button onClick={handleFollow}>ユーザをフォローする</button>
+      <button onClick={handleLike}>投稿にLikeする</button>
+      <button onClick={handleUnlike}>投稿のLikeを解除する</button>
+    </div>
+  );
+};
+
+export default PostComponent;
