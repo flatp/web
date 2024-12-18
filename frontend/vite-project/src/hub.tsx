@@ -3,7 +3,7 @@ import { Profile } from "./profile.tsx";
 import { Timeline } from "./timeline.tsx";
 
 export const Hub = () => {
-    const [activeTab, setActiveTab] = useState<'history' | 'timeline'>('history');
+    const [activeTab, setActiveTab] = useState<'history' | 'timeline' | 'book'>('history');
     return (
       <>
         <div className="top-bar">
@@ -28,14 +28,15 @@ export const Hub = () => {
             タイムライン
           </button>
           <button
-            className={`tab-item ${activeTab === 'timeline' ? 'active' : ''}`}
-            onClick={() => setActiveTab('timeline')}
+            className={`tab-item ${activeTab === 'book' ? 'active' : ''}`}
+            onClick={() => setActiveTab('book')}
           >
             ブックマーク
           </button>
         </div>
         {activeTab === 'history' && <Profile />}
         {activeTab === 'timeline' && <Timeline />}
+        {activeTab === 'book' && <Timeline />}
         </div>
       </>
     )

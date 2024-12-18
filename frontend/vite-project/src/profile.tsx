@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react'
+import { createPost, getUserPosts } from './api';
 
 type Todo = {
   value: string;
@@ -10,6 +11,35 @@ type Todo = {
 };
 
 export const Profile = () => {
+
+  const handleCreatePost = async () => {
+    try {
+      const postData = {
+        id: new Date().getTime(),
+        userid: 1, // 投稿者のID
+        name: text,
+        shopid: 1, // 店舗ID
+        memo: memo,
+      };
+      const response = await createPost(postData);
+      console.log('Post created:', response.data);
+      alert('投稿が作成されました');
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
+  };
+
+  const [userPosts, setUserPosts] = useState([]);
+
+  const fetchUserPosts = async () => {
+    try {
+      const response = await getUserPosts(1); 
+      setUserPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching user posts:', error);
+    }
+  };
+
   const [text, setText] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +54,7 @@ export const Profile = () => {
 
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!text) return;
 
     const newTodo: Todo = {
@@ -36,6 +66,8 @@ export const Profile = () => {
     };
 
     setTodos((todos) => [newTodo, ...todos]);
+    await handleCreatePost();
+    await fetchUserPosts();
     setText("");
     setMemo("");
   };
@@ -50,9 +82,13 @@ export const Profile = () => {
 
   const [selectedOption, setSelectedOption] = useState("SHISHA CAFE VELVET KYOTO");
 
-    const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedOption(e.target.value);
-    };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedOption(e.target.value);
+  };
+
+  useEffect(() => {
+    fetchUserPosts();
+  }, []);
 
   return (
     <div>
@@ -81,17 +117,17 @@ export const Profile = () => {
             />
         </form>
         <ul className="todo-list">
-            {todos.map((todo) => {
-                const todoDate = id_to_date(todo.id);
+            {userPosts.map((post: any) => {
+                const todoDate = id_to_date(post.id);
             return (
-                <React.Fragment key={todo.id}>
+                <React.Fragment key={post.id}>
                 
                 <li className="todo-item">  
                 <div className="todo-date">{todoDate}</div>
                 <div className="todo-details">            
-                <h3>{todo.value}</h3>
-                <h4>{todo.shop}</h4>
-                <div className="todo-date">{todo.memo}</div>
+                <h3>{post.name}</h3>
+                <h4>{post.shop.name}</h4>
+                <div className="todo-date">{post.memo}</div>
                 </div>  
                 <button className="rank-button" onClick={() => console.log('removed!')}>投稿</button>
                 </li>

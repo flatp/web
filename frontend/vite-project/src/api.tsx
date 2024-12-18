@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Axiosインスタンスの設定
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8000', // DjangoサーバーのURL
+  baseURL: 'http://127.0.0.1:8000/api/', //'http://localhost:8000',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -23,21 +23,21 @@ export const unlikePost = async (postId: number, userId: number) => {
   return await apiClient.post(`/posts/${postId}/unlike/`, { user_id: userId });
 };
 
-// ユーザの投稿を取得する関数（limit付き）
+// ユーザの投稿を取得する関数
 export const getUserPosts = async (userId: number) => {
   return await apiClient.get(`/posts/user-posts/${userId}/`);
 };
 
-// ユーザがフォローしているユーザの投稿を取得する関数（limit付き）
+// ユーザがフォローしているユーザの投稿を取得する関数
 export const getFollowingPosts = async (userId: number) => {
   return await apiClient.get(`/posts/following-posts/${userId}/`);
 };
 
 // 新しい投稿を作成する
 export const createPost = async (postData: {
-    user: number;
+    userid: number;
     name: string;
-    shop: number;
+    shopid: number;
     memo?: string;
   }) => {
     return await apiClient.post('/posts/', postData);

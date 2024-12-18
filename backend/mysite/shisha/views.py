@@ -40,12 +40,12 @@ class ShopViewSet(viewsets.ModelViewSet):
     serializer_class = ShopSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by('-id')
     serializer_class = PostSerializer
 
     @action(detail=False, methods=['get'], url_path='user-posts/(?P<user_id>[^/.]+)')
     def user_posts(self, request, user_id=None):
-        posts = Post.objects.filter(user__id=user_id)
+        posts = Post.objects.filter(user__id=user_id).order_by('-id')
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)
 
@@ -53,7 +53,7 @@ class PostViewSet(viewsets.ModelViewSet):
     def following_posts(self, request, user_id=None):
         user = User.objects.get(pk=user_id)
         following_users = user.following.all()
-        posts = Post.objects.filter(user__in=following_users)
+        posts = Post.objects.filter(user__in=following_users).order_by('-id')
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)
     
