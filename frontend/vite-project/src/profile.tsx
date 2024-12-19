@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import React from 'react'
-import { createPost, getUserPosts } from './api';
+import { createPost, getUserPosts, getShops } from './api';
 
 type Todo = {
   value: string;
@@ -18,12 +18,11 @@ export const Profile = () => {
         id: new Date().getTime(),
         userid: 1, // 投稿者のID
         name: text,
-        shopid: 1, // 店舗ID
+        shopid: selectedOption, // 店舗ID
         memo: memo,
       };
       const response = await createPost(postData);
       console.log('Post created:', response.data);
-      alert('投稿が作成されました');
     } catch (error) {
       console.error('Error creating post:', error);
     }
@@ -40,6 +39,17 @@ export const Profile = () => {
     }
   };
 
+  const [shops, setShops] = useState([]);
+
+  const fetchShops = async () => {
+    try {
+      const response = await getShops(); 
+      setShops(response.data);
+    } catch (error) {
+      console.error('Error fetching shops:', error);
+    }
+  };
+
   const [text, setText] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,24 +62,17 @@ export const Profile = () => {
     setMemo(e.target.value);
   };
 
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [detail, setDetail] = useState<Boolean>(false);
 
   const handleSubmit = async () => {
-    if (!text) return;
+    if (!text) {alert('フレーバーを入力してください'); return;}
+    if(selectedOption === 0) {alert('店舗を選択してください'); return;}
 
-    const newTodo: Todo = {
-      value: text,
-      shop: selectedOption,
-      memo: memo,
-      id: new Date().getTime(),
-      checked: false,
-    };
-
-    setTodos((todos) => [newTodo, ...todos]);
     await handleCreatePost();
     await fetchUserPosts();
     setText("");
     setMemo("");
+    setDetail(false);
   };
 
   const id_to_date = (id: number) => {
@@ -80,14 +83,15 @@ export const Profile = () => {
     return year + "年" + month + "月" + day + "日"
   };
 
-  const [selectedOption, setSelectedOption] = useState("SHISHA CAFE VELVET KYOTO");
+  const [selectedOption, setSelectedOption] = useState(0);
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setSelectedOption(e.target.value);
+      setSelectedOption(Number(e.target.value));
   };
 
   useEffect(() => {
     fetchUserPosts();
+    fetchShops();
   }, []);
 
   return (
@@ -98,17 +102,28 @@ export const Profile = () => {
             e.preventDefault();
             handleSubmit();
         }}>
-            <div>フレーバー名</div>
+            <div>フレーバー</div>
             <input type="text" value={text} className="input-text" onChange={(e) => handleChange(e)} />
-            <div>店名</div>
+            <div>店舗</div>
             <select value={selectedOption} className="select-dropdown" onChange={(e) => handleSelectChange(e)}>
-                <option value="SHISHA CAFE VELVET KYOTO">SHISHA CAFE VELVET KYOTO</option>
-                <option value="水たばこ喫茶ソワカ">水たばこ喫茶ソワカ</option>
-                <option value="SHEESHA CAFE Moch Pit">SHEESHA CAFE Moch Pit</option>
-                <option value="Shisha cafe & bar home is">Shisha cafe & bar home is</option>
+              <option value="0">店舗を選択してください</option>
+              {shops.map((shop: any) => (
+              <option key={shop.id} value={String(shop.id)}>
+                  {shop.name}
+              </option>
+              ))}
             </select>
+            {!detail && 
+              <button type="submit" className="detail-button" onClick={() => setDetail(!detail)}>▼</button>
+            }
+            {detail &&
+            <>
             <div>メモ</div>
             <input type="text" value={memo} className="input-text" onChange={(e) => handleChange2(e)} />
+            <button type="submit" className="detail-button" onClick={() => setDetail(!detail)}>▲</button>
+            </>
+            }
+            
             <input
                 type="submit"
                 value="追加"
@@ -128,8 +143,7 @@ export const Profile = () => {
                 <h3>{post.name}</h3>
                 <h4>{post.shop.name}</h4>
                 <div className="todo-date">{post.memo}</div>
-                </div>  
-                <button className="rank-button" onClick={() => console.log('removed!')}>投稿</button>
+                </div> 
                 </li>
                 </React.Fragment>
             );

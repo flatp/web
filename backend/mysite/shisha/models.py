@@ -7,10 +7,9 @@ class User(models.Model):
     following = models.ManyToManyField("self", related_name="followed_by", symmetrical=False, blank=True)
 
 class Shop(models.Model):
-    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=32, help_text="店名")
     url = models.URLField(null=True, blank=True)
-    locate = models.TextField(null=True, blank=True, default="")
+    location = models.CharField(max_length=8, null=True, blank=True, default="")
     mood = models.TextField(null=True, blank=True, default="")
     time = models.TextField(null=True, blank=True, default="")
     mouth = models.BooleanField()

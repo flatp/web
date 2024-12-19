@@ -47,3 +47,8 @@ export const createPost = async (postData: {
 export const deletePost = async (postId: number) => {
     return await apiClient.delete(`/posts/${postId}/`);
   };
+
+// 投稿を削除する
+export const getShops = async () => {
+  return await apiClient.get(`/shops/`);
+};

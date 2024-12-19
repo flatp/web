@@ -8,13 +8,13 @@ from .models import User, Shop, Post
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('name', 'mail', 'following', 'like')
+        fields = '__all__'
 
 
 class ShopSerializer(serializers.ModelSerializer):
     class Meta:
         model = Shop
-        fields = ('id', 'name', 'url', 'locate', 'mood', 'time', 'mouth', 'goods')
+        fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
     userid = serializers.PrimaryKeyRelatedField(
