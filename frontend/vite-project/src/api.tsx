@@ -35,20 +35,25 @@ export const getFollowingPosts = async (userId: number) => {
 
 // 新しい投稿を作成する
 export const createPost = async (postData: {
-    userid: number;
-    name: string;
-    shopid: number;
-    memo?: string;
-  }) => {
-    return await apiClient.post('/posts/', postData);
-  };
+  userid: number;
+  name: string;
+  shopid: number;
+  memo?: string;
+}) => {
+  return await apiClient.post('/posts/', postData);
+};
   
 // 投稿を削除する
 export const deletePost = async (postId: number) => {
-    return await apiClient.delete(`/posts/${postId}/`);
-  };
+  return await apiClient.delete(`/posts/${postId}/`);
+};
 
 // 投稿を削除する
 export const getShops = async () => {
   return await apiClient.get(`/shops/`);
+};
+
+// likeした投稿を取得する関数
+export const getLikePosts = async (userId: number) => {
+  return await apiClient.get(`/posts/liked-posts/${userId}/`);
 };

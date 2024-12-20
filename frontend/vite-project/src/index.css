@@ -56,6 +56,7 @@ h1 {
   font-size: 1rem;
   font-weight: bold;
   color: #555;
+  margin-top: 10px;
 }
 
 .input-text,
@@ -247,4 +248,11 @@ h1 {
 .content {
   margin-top: 60px; /* 上部バーの高さに合わせる */
   padding: 20px;
+}
+
+.fav-button {
+  margin-left: 90%;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
 }

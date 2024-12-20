@@ -2,14 +2,6 @@ import { useEffect, useState } from 'react';
 import React from 'react'
 import { createPost, getUserPosts, getShops } from './api';
 
-type Todo = {
-  value: string;
-  shop: string;
-  memo: string;
-  readonly id: number;
-  checked: boolean;
-};
-
 export const Profile = () => {
 
   const handleCreatePost = async () => {

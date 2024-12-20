@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
@@ -53,7 +53,8 @@ class PostViewSet(viewsets.ModelViewSet):
     def following_posts(self, request, user_id=None):
         user = User.objects.get(pk=user_id)
         following_users = user.following.all()
-        posts = Post.objects.filter(user__in=following_users).order_by('-id')
+        all_users = list(following_users) + [user]
+        posts = Post.objects.filter(user__in=all_users).order_by('-id')
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)
     
@@ -78,3 +79,9 @@ class PostViewSet(viewsets.ModelViewSet):
             post.liked.remove(user)
             return Response({"detail": "いいねを取り消しました。"}, status=status.HTTP_200_OK)
         return Response({"detail": "いいねしていません。"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    @action(detail=False, methods=['get'], url_path='liked-posts/(?P<user_id>[^/.]+)')
+    def liked_posts(self, request, user_id=None):
+        posts = Post.objects.filter(liked__id=user_id).order_by('-id')
+        serializer = self.get_serializer(posts, many=True)
+        return Response(serializer.data)

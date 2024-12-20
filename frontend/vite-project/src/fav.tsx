@@ -1,32 +1,23 @@
 import { useEffect, useState } from 'react';
 import React from 'react'
-import { getFollowingPosts, likePost, unlikePost } from './api';
+import { getLikePosts, unlikePost } from './api';
 
-export const Timeline = () => {
+export const Fav = () => {
     const [posts, setPosts] = useState([]);
     
-    const fetchFollowingPosts = async () => {
+    const fetchLikePosts = async () => {
       try {
-        const response = await getFollowingPosts(1);
+        const response = await getLikePosts(1);
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching following posts:', error);
       }
     };
 
-    const handleLike = async (postId:number, userId:number) => {
-      try {
-        await likePost(postId, userId);
-        await fetchFollowingPosts();
-      } catch (error) {
-        console.error('Error liking post:', error);
-      }
-    };
-
     const handleUnlike = async (postId:number, userId:number) => {
       try {
         await unlikePost(postId, userId);
-        await fetchFollowingPosts();
+        await fetchLikePosts();
       } catch (error) {
         console.error('Error unliking post:', error);
       }
@@ -41,13 +32,8 @@ export const Timeline = () => {
     };
 
     useEffect(() => {
-      fetchFollowingPosts();
+      fetchLikePosts();
       }, []);
-
-    const post_user_like = (likeds:number) => {
-      if(1 == likeds) return true;
-      return false;
-    }
 
     return (
         <ul className="todo-list">
@@ -64,8 +50,7 @@ export const Timeline = () => {
                 <h3>{post.name}</h3>
                 <h4>{post.shop.name}</h4>
                 <div className="todo-date">{post.memo}</div>
-                { !post_user_like(post.liked) && <button className="fav-button" onClick={() => handleLike(post.id, 1)}>♡</button>}
-                { post_user_like(post.liked) && <button className="fav-button" onClick={() => handleUnlike(post.id, 1)}>❤</button>}
+                <button className="fav-button" onClick={() => handleUnlike(post.id, 1)}>❤</button>
                 </div>  
                 </li>
                 </React.Fragment>

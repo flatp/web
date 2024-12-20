@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Profile } from "./profile.tsx";
 import { Timeline } from "./timeline.tsx";
+import { Fav } from "./fav.tsx";
 
 export const Hub = () => {
     const [activeTab, setActiveTab] = useState<'history' | 'timeline' | 'book'>('history');
@@ -36,7 +37,7 @@ export const Hub = () => {
         </div>
         {activeTab === 'history' && <Profile />}
         {activeTab === 'timeline' && <Timeline />}
-        {activeTab === 'book' && <Timeline />}
+        {activeTab === 'book' && <Fav />}
         </div>
       </>
     )
