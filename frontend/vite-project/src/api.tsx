@@ -48,9 +48,14 @@ export const deletePost = async (postId: number) => {
   return await apiClient.delete(`/posts/${postId}/`);
 };
 
-// 投稿を削除する
+// 店舗一覧を取得する
 export const getShops = async () => {
   return await apiClient.get(`/shops/`);
+};
+
+// 店舗をID指定で取得する
+export const getShopbyID = async (shopId: number) => {
+  return await apiClient.get(`/shops/${shopId}/`);
 };
 
 // likeした投稿を取得する関数

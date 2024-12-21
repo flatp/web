@@ -1,6 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export const Shop = () => {
+    const navigate = useNavigate()
+    const handleForm = () => {
+        navigate('/')
+    }
 
     const [text, setText] = useState('');
     
@@ -27,9 +32,9 @@ export const Shop = () => {
     return (
         <>
             <div className="top-bar">
-                <div className="logo">SHISHA MEMO</div>
+                <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
                 <div className="menu">
-                <a href="/">Home</a>
+                <a href="/shop">Shop</a>
                 <a href="/profile">Profile</a>
                 </div>
             </div>

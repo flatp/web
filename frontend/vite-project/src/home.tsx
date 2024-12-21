@@ -3,14 +3,14 @@ import { useNavigate } from "react-router-dom";
 export const Home = () => {
     const navigate = useNavigate()
     const handleForm = () => {
-        navigate('/Profile')
+        navigate('/')
     }
     return (
         <>
             <div className="top-bar">
-                <div className="logo">SHISHA MEMO</div>
+                <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
                 <div className="menu">
-                <a href="/">Home</a>
+                <a href="/shop">Shop</a>
                 <a href="/profile">Profile</a>
                 </div>
             </div>
