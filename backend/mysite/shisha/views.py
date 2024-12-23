@@ -14,8 +14,8 @@ class ShopFilter(FilterSet):
         fields = {
             'name': ['icontains'], 
             'location': ['icontains'], 
-            'mouth': ['exact'],
-            'goods': ['exact'],
+            # 'mouth': ['exact'],
+            # 'goods': ['exact'],
         }
 
 class UserViewSet(viewsets.ModelViewSet):
