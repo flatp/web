@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { getShopbySearch } from './api';
 
 export const Shop = () => {
     const navigate = useNavigate()
@@ -29,6 +30,21 @@ export const Shop = () => {
         setSelectedPrefecture(e.target.value);
       };
 
+    const [shops, setShops] = useState([]);
+
+    const fetchSearchShops = async () => {
+        try {
+        const response = await getShopbySearch("?name__icontains=" + text + "&location__icontains=" + selectedPrefecture);
+        setShops(response.data);
+        } catch (error) {
+        console.error('Error fetching shops:', error);
+        }
+        };
+    
+        const handleShop = (shopId:number) => {
+            navigate('/shop/'+String(shopId))
+        }
+
     return (
         <>
             <div className="top-bar">
@@ -41,7 +57,9 @@ export const Shop = () => {
             <div className="profile-container">
             <form
             className="profile-form"
-            onSubmit={(e) => {e.preventDefault();}}>
+            onSubmit={(e) => {
+                e.preventDefault();
+                fetchSearchShops();}}>
             <h2>店舗検索</h2>
             <div>店名</div>
             <input type="text" value={text} className="input-text" onChange={(e) => handleChange(e)} />
@@ -58,9 +76,23 @@ export const Shop = () => {
                 type="submit"
                 value="検索"
                 className="submit-button"
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={fetchSearchShops}
             />
             </form>
+            {shops.map((shop:any) => {
+                        return (
+                            <li className="todo-item" key={String(shop.id)}> 
+                            <div className="post_top">
+                            <div className="todo-user">{shop.name}</div>
+                            </div> 
+                            <div className="todo-details">            
+                            <h3>{shop.location}</h3>
+                            <h4>{shop.mood}</h4>
+                            <button className="fav-button" onClick={() => handleShop(shop.id)}>店舗ページへ</button>
+                            </div>  
+                            </li>
+                        );
+                        })}
             </div>
         </>
     )

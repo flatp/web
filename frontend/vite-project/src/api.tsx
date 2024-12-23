@@ -62,3 +62,8 @@ export const getShopbyID = async (shopId: number) => {
 export const getLikePosts = async (userId: number) => {
   return await apiClient.get(`/posts/liked-posts/${userId}/`);
 };
+
+// 店舗を検索で取得する
+export const getShopbySearch = async (searchText: string) => {
+  return await apiClient.get(`/shops/${searchText}`);
+};
