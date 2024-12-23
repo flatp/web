@@ -3,10 +3,20 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
-
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from .models import User, Shop, Post
 from .serializer import UserSerializer, ShopSerializer, PostSerializer
 
+
+class ShopFilter(FilterSet):
+    class Meta:
+        model = Shop
+        fields = {
+            'name': ['icontains'], 
+            'location': ['icontains'], 
+            'mouth': ['exact'],
+            'goods': ['exact'],
+        }
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -38,6 +48,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class ShopViewSet(viewsets.ModelViewSet):
     queryset = Shop.objects.all()
     serializer_class = ShopSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ShopFilter
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all().order_by('-id')
