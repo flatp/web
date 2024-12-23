@@ -2,23 +2,13 @@ import { useState } from 'react';
 import { Profile } from "./profile.tsx";
 import { Timeline } from "./timeline.tsx";
 import { Fav } from "./fav.tsx";
-import { useNavigate } from "react-router-dom";
+import { TopBar } from "./topbar.tsx";
 
 export const Hub = () => {
-  const navigate = useNavigate()
-    const handleForm = () => {
-        navigate('/')
-    }
     const [activeTab, setActiveTab] = useState<'history' | 'timeline' | 'book'>('history');
     return (
       <>
-        <div className="top-bar">
-            <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
-            <div className="menu">
-            <a href="/shop">Shop</a>
-            <a href="/profile">Profile</a>
-            </div>
-        </div>
+        <TopBar/>
         <div className="profile-container">
         <div className="tab-container">
           <button

@@ -1,19 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { TopBar } from "./topbar.tsx";
 
 export const Home = () => {
-    const navigate = useNavigate()
-    const handleForm = () => {
-        navigate('/')
-    }
     return (
         <>
-            <div className="top-bar">
-                <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
-                <div className="menu">
-                <a href="/shop">Shop</a>
-                <a href="/profile">Profile</a>
-                </div>
-            </div>
+            <TopBar/>
             <div className="profile-container">
             <h1>home</h1>
             <h2>キャッチフレーズ</h2>

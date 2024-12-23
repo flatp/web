@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { getShopbySearch } from './api';
+import { TopBar } from "./topbar.tsx";
 
 export const Shop = () => {
     const navigate = useNavigate()
-    const handleForm = () => {
-        navigate('/')
-    }
 
     const [text, setText] = useState('');
     
@@ -47,13 +45,7 @@ export const Shop = () => {
 
     return (
         <>
-            <div className="top-bar">
-                <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
-                <div className="menu">
-                <a href="/shop">Shop</a>
-                <a href="/profile">Profile</a>
-                </div>
-            </div>
+            <TopBar/>
             <div className="profile-container">
             <form
             className="profile-form"
@@ -82,13 +74,11 @@ export const Shop = () => {
             {shops.map((shop:any) => {
                         return (
                             <li className="todo-item" key={String(shop.id)}> 
-                            <div className="post_top">
-                            <div className="todo-user">{shop.name}</div>
-                            </div> 
                             <div className="todo-details">            
-                            <h3>{shop.location}</h3>
+                            <h3>{shop.name}</h3>
+                            <h4>{shop.location}</h4>
                             <h4>{shop.mood}</h4>
-                            <button className="fav-button" onClick={() => handleShop(shop.id)}>店舗ページへ</button>
+                            <button onClick={() => handleShop(shop.id)}>店舗ページへ</button>
                             </div>  
                             </li>
                         );

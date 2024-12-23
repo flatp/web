@@ -1,12 +1,9 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getShopbyID } from './api';
+import { TopBar } from "./topbar.tsx";
 
 export const Shoppage = () => {
-    const navigate = useNavigate()
-    const handleForm = () => {
-        navigate('/')
-    }
     const { id } = useParams();
 
     const [shop, setShop] = useState<any>();
@@ -26,13 +23,7 @@ export const Shoppage = () => {
 
     return (
         <>
-            <div className="top-bar">
-                <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
-                <div className="menu">
-                <a href="/shop">Shop</a>
-                <a href="/profile">Profile</a>
-                </div>
-            </div>
+            <TopBar/>
             <div className="profile-container">
             {!shop ? ( // データがない場合のローディング状態を表示
                 <p>Loading shop data...</p>
@@ -40,10 +31,13 @@ export const Shoppage = () => {
             <>
             <h2>{shop.name}</h2>
             <h3>{shop.location}</h3>
-            <form
-            className="profile-form"
-            onSubmit={(e) => {e.preventDefault();}}>
+            <div className="profile-form">
+            <div>営業時間</div>
             <div>{shop.time}</div>
+            </div>
+            {shop.url != "" && <a href={shop.url}>HP</a>}
+            <div
+            className="profile-form">
             <div className="rating-container">
             <div className="rating-label">静か</div>
             <div className="rating-bar">
@@ -59,7 +53,7 @@ export const Shoppage = () => {
             <div className="rating-label">賑やか</div>
             </div>
             <div className="rating-container">
-            <div className="rating-label">狭い</div>
+            <div className="rating-label">暗い</div>
             <div className="rating-bar">
                 {[1, 2, 3, 4, 5].map((level) => (
                 <div
@@ -70,7 +64,7 @@ export const Shoppage = () => {
                 ></div>
                 ))}
             </div>
-            <div className="rating-label">広い</div>
+            <div className="rating-label">明るい</div>
             </div>
             <div className="shop-features-table">
             <div className="table-row">
@@ -94,7 +88,7 @@ export const Shoppage = () => {
                 <div className="table-cell">{shop.goods ? "有" : "無"}</div>
             </div>
             </div>
-            </form>
+            </div>
             <form
                 className="profile-form"
                 onSubmit={(e) => {e.preventDefault();}}>

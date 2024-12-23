@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import React from 'react'
-import { createPost, getUserPosts, getShops } from './api';
+import { createPost, getUserPosts, getShops, likePost, unlikePost } from './api';
+import PostCard from './postcard';
 
 export const Profile = () => {
 
@@ -28,6 +29,24 @@ export const Profile = () => {
       setUserPosts(response.data);
     } catch (error) {
       console.error('Error fetching user posts:', error);
+    }
+  };
+
+  const handleLike = async (postId:number, userId:number) => {
+    try {
+      await likePost(postId, userId);
+      await fetchUserPosts();
+    } catch (error) {
+      console.error('Error liking post:', error);
+    }
+  };
+
+  const handleUnlike = async (postId:number, userId:number) => {
+    try {
+      await unlikePost(postId, userId);
+      await fetchUserPosts();
+    } catch (error) {
+      console.error('Error unliking post:', error);
     }
   };
 
@@ -65,14 +84,6 @@ export const Profile = () => {
     setText("");
     setMemo("");
     setDetail(false);
-  };
-
-  const id_to_date = (id: number) => {
-    const date = new Date(id);
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return year + "年" + month + "月" + day + "日"
   };
 
   const [selectedOption, setSelectedOption] = useState(0);
@@ -125,19 +136,13 @@ export const Profile = () => {
         </form>
         <ul className="todo-list">
             {userPosts.map((post: any) => {
-                const todoDate = id_to_date(post.id);
             return (
-                <React.Fragment key={post.id}>
-                
-                <li className="todo-item">  
-                <div className="todo-date">{todoDate}</div>
-                <div className="todo-details">            
-                <h3>{post.name}</h3>
-                <h4>{post.shop.name}</h4>
-                <div className="todo-date">{post.memo}</div>
-                </div> 
-                </li>
-                </React.Fragment>
+              <PostCard
+              key={post.id}
+              post={post}
+              onLike={handleLike}
+              onUnlike={handleUnlike}
+            />
             );
             })}
         </ul>
