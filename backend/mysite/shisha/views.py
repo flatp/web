@@ -4,6 +4,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django.db.models import Count
 from .models import User, Shop, Post
 from .serializer import UserSerializer, ShopSerializer, PostSerializer
 
@@ -95,5 +96,17 @@ class PostViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], url_path='liked-posts/(?P<user_id>[^/.]+)')
     def liked_posts(self, request, user_id=None):
         posts = Post.objects.filter(liked__id=user_id).order_by('-id')
+        serializer = self.get_serializer(posts, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'], url_path='popular-posts')
+    def popular_posts(self, request):
+        limit = int(request.query_params.get('limit', 10))
+        shop_id = request.query_params.get('shop_id')
+        posts = Post.objects.annotate(like_count=Count('liked')).order_by('-like_count')
+
+        if shop_id:
+            posts = posts.filter(shop_id=shop_id)
+        posts = posts[:limit]
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)

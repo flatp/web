@@ -250,8 +250,11 @@ h1 {
   padding: 20px;
 }
 
-.fav-button {
+.fav{
   margin-left: 90%;
+}
+
+.fav-button {
   background-color: #ffffff;
   border: none;
   cursor: pointer;

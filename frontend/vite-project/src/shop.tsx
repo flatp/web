@@ -43,6 +43,10 @@ export const Shop = () => {
             navigate('/shop/'+String(shopId))
         }
 
+        const handleShopCreate = () => {
+            navigate('/postShop/')
+        }
+
     return (
         <>
             <TopBar/>
@@ -83,6 +87,7 @@ export const Shop = () => {
                             </li>
                         );
                         })}
+            <button onClick={handleShopCreate}>店舗を追加</button>
             </div>
         </>
     )

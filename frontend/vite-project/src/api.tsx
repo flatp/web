@@ -33,6 +33,11 @@ export const getFollowingPosts = async (userId: number) => {
   return await apiClient.get(`/posts/following-posts/${userId}/`);
 };
 
+// ユーザの投稿を取得する関数
+export const getPopularPosts = async (searchText: string) => {
+  return await apiClient.get(`/posts/popular-posts/${searchText}`);
+};
+
 // 新しい投稿を作成する
 export const createPost = async (postData: {
   userid: number;

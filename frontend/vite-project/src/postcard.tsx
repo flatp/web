@@ -17,11 +17,6 @@ const PostCard: React.FC<PostProps> = ({ post, onLike, onUnlike }) => {
   };
 
   const date = id_to_date(post.id);
-  
-  const post_user_like = (likeds: number) => {
-    if(1 == likeds) return true;
-      return false;
-  };
 
   return (
     <li className="todo-item">
@@ -33,16 +28,18 @@ const PostCard: React.FC<PostProps> = ({ post, onLike, onUnlike }) => {
         <h3>{post.name}</h3>
         <h4>{post.shop.name}</h4>
         <div className="todo-date">{post.memo}</div>
-        {!post_user_like(post.liked) && (
+        <div className="fav">
+        {!post.liked.includes(1) ? (
           <button className="fav-button" onClick={() => onLike(post.id, 1)}>
             ♡
           </button>
-        )}
-        {post_user_like(post.liked) && (
+        ) : (
           <button className="fav-button" onClick={() => onUnlike(post.id, 1)}>
             ❤
           </button>
         )}
+        {post.liked.length}
+        </div>
       </div>
     </li>
   );
