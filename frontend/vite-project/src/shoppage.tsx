@@ -66,8 +66,7 @@ export const Shoppage = () => {
             <div>{shop.time}</div>
             </div>
             {shop.url != "" && <a href={shop.url}>HP</a>}
-            <div
-            className="profile-form">
+            <div className="profile-form">
             <div className="rating-container">
             <div className="rating-label">静か</div>
             <div className="rating-bar">
