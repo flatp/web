@@ -8,7 +8,22 @@ from .models import User, Shop, Post
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'email', 'name', 'password', 'following', 'is_active', 'is_admin']
+        read_only_fields = ['is_active', 'is_admin']
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User.objects.create_user(**validated_data, password=password)
+        return user
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance
 
 
 class ShopSerializer(serializers.ModelSerializer):

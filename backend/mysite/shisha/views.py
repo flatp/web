@@ -1,14 +1,28 @@
 # coding: utf-8
 
 from rest_framework import viewsets, status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
 from django.db.models import Count
 from .models import User, Shop, Post
 from .serializer import UserSerializer, ShopSerializer, PostSerializer
 
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        try:
+            refresh_token = request.data.get("refresh")
+            token = RefreshToken(refresh_token)
+            token.blacklist()  # リフレッシュトークンをブラックリストに追加
+            return Response({"message": "Successfully logged out"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 class ShopFilter(FilterSet):
     class Meta:
         model = Shop
@@ -22,6 +36,20 @@ class ShopFilter(FilterSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_permissions(self):
+        # 作成時は誰でもアクセス可能、それ以外は認証が必要
+        if self.action in ['create']:
+            return [AllowAny()]
+        return [IsAuthenticated()]
+
+    def perform_create(self, serializer):
+        # パスワードをハッシュ化して保存
+        serializer.save()
+
+    def perform_update(self, serializer):
+        # 更新時も同様にハッシュ化を行う
+        serializer.save()
 
     @action(detail=True, methods=['post'], url_path='follow')
     def follow_user(self, request, pk=None):
