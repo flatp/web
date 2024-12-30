@@ -8,6 +8,18 @@ const apiClient = axios.create({
   },
 });
 
+export const login = async (email: string, password: string) => {
+  const response = await apiClient.post(`/token/`, {
+    email,
+    password,
+  });
+  return response.data; // { access: "jwt_access_token", refresh: "jwt_refresh_token" }
+};
+
+export const logout = async () => {
+  await apiClient.post(`/logout/`); // 必要に応じてサーバー側でトークンを無効化
+};
+
 // ユーザをフォローする関数
 export const followUser = async (userId: number, targetUserId: number) => {
   return await apiClient.post(`/users/${userId}/follow/`, { target_user_id: targetUserId });
