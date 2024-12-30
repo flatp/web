@@ -8,6 +8,19 @@ const apiClient = axios.create({
   },
 });
 
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('accessToken'); // localStorageからトークンを取得
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`; // Authorizationヘッダーにトークンを設定
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export const login = async (email: string, password: string) => {
   const response = await apiClient.post(`/token/`, {
     email,

@@ -15,13 +15,13 @@ router.register(r'shops', ShopViewSet)
 router.register(r'posts', PostViewSet)
 
 
-urlpatterns = [
-    # JWT用エンドポイント
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # ログイン
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # トークンリフレッシュ
-    path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # トークン確認
-    path('api/logout/', LogoutView.as_view(), name='logout'),
+# urlpatterns = [
+#     # JWT用エンドポイント
+#     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),  # ログイン
+#     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # トークンリフレッシュ
+#     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),  # トークン確認
+#     path('logout/', LogoutView.as_view(), name='logout'),
 
-    # ルーターのエンドポイントを含む
-    path('api/', include(router.urls)),
-]
+#     # ルーターのエンドポイントを含む
+#     path('', include(router.urls)),
+# ]
