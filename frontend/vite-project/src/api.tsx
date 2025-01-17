@@ -34,28 +34,28 @@ export const logout = async () => {
 };
 
 // ユーザをフォローする関数
-export const followUser = async (userId: number, targetUserId: number) => {
-  return await apiClient.post(`/users/${userId}/follow/`, { target_user_id: targetUserId });
+export const followUser = async (targetUserId: number) => {
+  return await apiClient.post(`/users/${targetUserId}/follow/`);
 };
 
 // 投稿にlikeする関数
-export const likePost = async (postId: number, userId: number) => {
-  return await apiClient.post(`/posts/${postId}/like/`, { user_id: userId });
+export const likePost = async (postId: number) => {
+  return await apiClient.post(`/posts/${postId}/like/`);
 };
 
 // 投稿のlikeを解除する関数
-export const unlikePost = async (postId: number, userId: number) => {
-  return await apiClient.post(`/posts/${postId}/unlike/`, { user_id: userId });
+export const unlikePost = async (postId: number) => {
+  return await apiClient.post(`/posts/${postId}/unlike/`);
 };
 
 // ユーザの投稿を取得する関数
-export const getUserPosts = async (userId: number) => {
-  return await apiClient.get(`/posts/user-posts/${userId}/`);
+export const getUserPosts = async () => {
+  return await apiClient.get(`/posts/user-posts/`);
 };
 
 // ユーザがフォローしているユーザの投稿を取得する関数
-export const getFollowingPosts = async (userId: number) => {
-  return await apiClient.get(`/posts/following-posts/${userId}/`);
+export const getFollowingPosts = async () => {
+  return await apiClient.get(`/posts/following-posts/`);
 };
 
 // ユーザの投稿を取得する関数
@@ -89,8 +89,8 @@ export const getShopbyID = async (shopId: number) => {
 };
 
 // likeした投稿を取得する関数
-export const getLikePosts = async (userId: number) => {
-  return await apiClient.get(`/posts/liked-posts/${userId}/`);
+export const getLikePosts = async () => {
+  return await apiClient.get(`/posts/liked-posts/`);
 };
 
 // 店舗を検索で取得する

@@ -25,25 +25,25 @@ export const Profile = () => {
 
   const fetchUserPosts = async () => {
     try {
-      const response = await getUserPosts(1); 
+      const response = await getUserPosts(); 
       setUserPosts(response.data);
     } catch (error) {
       console.error('Error fetching user posts:', error);
     }
   };
 
-  const handleLike = async (postId:number, userId:number) => {
+  const handleLike = async (postId:number) => {
     try {
-      await likePost(postId, userId);
+      await likePost(postId);
       await fetchUserPosts();
     } catch (error) {
       console.error('Error liking post:', error);
     }
   };
 
-  const handleUnlike = async (postId:number, userId:number) => {
+  const handleUnlike = async (postId:number) => {
     try {
-      await unlikePost(postId, userId);
+      await unlikePost(postId);
       await fetchUserPosts();
     } catch (error) {
       console.error('Error unliking post:', error);

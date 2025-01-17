@@ -28,18 +28,18 @@ export const Shoppage = () => {
         }
       };
 
-    const handleLike = async (postId:number, userId:number) => {
+    const handleLike = async (postId:number) => {
     try {
-        await likePost(postId, userId);
+        await likePost(postId);
         await fetchPosts();
     } catch (error) {
         console.error('Error liking post:', error);
     }
     };
 
-    const handleUnlike = async (postId:number, userId:number) => {
+    const handleUnlike = async (postId:number) => {
     try {
-        await unlikePost(postId, userId);
+        await unlikePost(postId);
         await fetchPosts();
     } catch (error) {
         console.error('Error unliking post:', error);

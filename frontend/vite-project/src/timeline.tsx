@@ -7,25 +7,25 @@ export const Timeline = () => {
     
     const fetchFollowingPosts = async () => {
       try {
-        const response = await getFollowingPosts(1);
+        const response = await getFollowingPosts();
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching following posts:', error);
       }
     };
 
-    const handleLike = async (postId:number, userId:number) => {
+    const handleLike = async (postId:number) => {
       try {
-        await likePost(postId, userId);
+        await likePost(postId);
         await fetchFollowingPosts();
       } catch (error) {
         console.error('Error liking post:', error);
       }
     };
 
-    const handleUnlike = async (postId:number, userId:number) => {
+    const handleUnlike = async (postId:number) => {
       try {
-        await unlikePost(postId, userId);
+        await unlikePost(postId);
         await fetchFollowingPosts();
       } catch (error) {
         console.error('Error unliking post:', error);

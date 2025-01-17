@@ -3,8 +3,8 @@ import React from 'react';
 
 interface PostProps {
   post: any;
-  onLike: (postId: number, userId: number) => void;
-  onUnlike: (postId: number, userId: number) => void;
+  onLike: (postId: number) => void;
+  onUnlike: (postId: number) => void;
 }
 
 const PostCard: React.FC<PostProps> = ({ post, onLike, onUnlike }) => {
@@ -30,11 +30,11 @@ const PostCard: React.FC<PostProps> = ({ post, onLike, onUnlike }) => {
         <div className="todo-date">{post.memo}</div>
         <div className="fav">
         {!post.liked.includes(1) ? (
-          <button className="fav-button" onClick={() => onLike(post.id, 1)}>
+          <button className="fav-button" onClick={() => onLike(post.id)}>
             ♡
           </button>
         ) : (
-          <button className="fav-button" onClick={() => onUnlike(post.id, 1)}>
+          <button className="fav-button" onClick={() => onUnlike(post.id)}>
             ❤
           </button>
         )}

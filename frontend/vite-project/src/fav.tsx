@@ -7,25 +7,25 @@ export const Fav = () => {
     
     const fetchLikePosts = async () => {
       try {
-        const response = await getLikePosts(1);
+        const response = await getLikePosts();
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching following posts:', error);
       }
     };
 
-    const handleLike = async (postId:number, userId:number) => {
+    const handleLike = async (postId:number) => {
       try {
-        await unlikePost(postId, userId);
+        await unlikePost(postId);
         await fetchLikePosts();
       } catch (error) {
         console.error('Error unliking post:', error);
       }
     };
 
-    const handleUnlike = async (postId:number, userId:number) => {
+    const handleUnlike = async (postId:number) => {
       try {
-        await unlikePost(postId, userId);
+        await unlikePost(postId);
         await fetchLikePosts();
       } catch (error) {
         console.error('Error unliking post:', error);
