@@ -7,7 +7,7 @@ export const TopBar = () => {
       }
       return(
         <div className="top-bar">
-            <div className="logo" onClick={handleForm}>SHISHA MEMO</div>
+            <div className="logo" onClick={handleForm}>SHISHAMEMO</div>
             <div className="menu">
             <a href="/shop">Shop</a>
             <a href="/profile">Profile</a>

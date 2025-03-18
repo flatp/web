@@ -9,9 +9,8 @@ export const Profile = () => {
     try {
       const postData = {
         id: new Date().getTime(),
-        userid: 1, // 投稿者のID
         name: text,
-        shopid: selectedOption, // 店舗ID
+        shop_id: selectedOption, // 店舗ID
         memo: memo,
       };
       const response = await createPost(postData);

@@ -65,12 +65,12 @@ export const getPopularPosts = async (searchText: string) => {
 
 // 新しい投稿を作成する
 export const createPost = async (postData: {
-  userid: number;
+  id: number;
   name: string;
-  shopid: number;
+  shop_id: number;
   memo?: string;
 }) => {
-  return await apiClient.post('/posts/', postData);
+  return await apiClient.post('/posts/create/', postData);
 };
   
 // 投稿を削除する
