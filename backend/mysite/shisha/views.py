@@ -181,8 +181,8 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(posts, many=True)
         return Response(serializer.data)
     
-    @action(detail=True, methods=['post'], url_path='create')
-    def like_post(self, request, pk=None):
+    @action(detail=False, methods=['post'], url_path='create')
+    def create_post(self, request, pk=None):
         user = request.user
         id = request.data.get('id')
         name = request.data.get('name')
@@ -199,6 +199,6 @@ class PostViewSet(viewsets.ModelViewSet):
         )
 
         return Response(
-            {"detail": f"投稿 '{post.title}' が作成されました。"},
+            {"detail": f"投稿 '{post.name}' が作成されました。"},
             status=status.HTTP_201_CREATED
         )

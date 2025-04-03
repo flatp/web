@@ -32,14 +32,14 @@ class ShopSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
-    # userid = serializers.PrimaryKeyRelatedField(
-    #     queryset=User.objects.all(), source='user', write_only=True
-    # )
-    # shopid = serializers.PrimaryKeyRelatedField(
-    #     queryset=Shop.objects.all(), source='shop', write_only=True
-    # )
-    # user = UserSerializer(read_only=True)
-    # shop = ShopSerializer(read_only=True)
+    userid = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='user', write_only=True
+    )
+    shopid = serializers.PrimaryKeyRelatedField(
+        queryset=Shop.objects.all(), source='shop', write_only=True
+    )
+    user = UserSerializer(read_only=True)
+    shop = ShopSerializer(read_only=True)
     class Meta:
         model = Post
         fields = '__all__'
